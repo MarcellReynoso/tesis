@@ -22,14 +22,20 @@ export default function KPI({ apiUrl, campo, label }) {
   }, [apiUrl, campo]);
 
   return (
-    <div className="flex flex-col gap-8 mb-6 justify-center">
-      <div className="bg-blue-500 text-white px-6 py-4 rounded-xl shadow-lg w-60 text-center">
-        <h3 className="text-lg font-semibold">{label} actual</h3>
-        <p className="text-3xl mt-2">{valorActual ?? "0.00"} </p>
+    <div className="grid content-around gap-5 w-full justify-end">
+      <div className="tarjeta text-white px-6 py-4 rounded-2xl shadow-lg w-50 lg:w-60  text-center">
+        <h3 className="text-xs font-bold">
+          ACTUAL
+        </h3>
+        <p className="text-4xl lg:text-6xl mt-2 font-semibold">{valorActual ?? "0.00"} </p>
       </div>
-      <div className="bg-green-500 text-white px-6 py-4 rounded-xl shadow-lg w-60 text-center">
-        <h3 className="text-lg font-semibold">{label} promedio</h3>
-        <p className="text-3xl mt-2">{valorPromedio ?? "0.00"} </p>
+      <div className="tarjeta2 text-white px-6 py-4 rounded-2xl shadow-lg w-50 lg:w-60 text-center">
+        <h3 className="text-xs font-bold">
+          PROMEDIO
+        </h3>
+        <p className="text-4xl lg:text-6xl mt-2 font-semibold">
+          {valorPromedio ?? "0.00"}{" "}
+        </p>
       </div>
     </div>
   );

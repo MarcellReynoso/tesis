@@ -1,5 +1,3 @@
-import TablaCorporal from "@/app/components/TablaCorporal";
-
 async function loadData() {
   const response = await fetch(`${process.env.URL}/api/corporal`, {
     cache: "no-store",

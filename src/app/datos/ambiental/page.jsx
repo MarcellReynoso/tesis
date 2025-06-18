@@ -1,5 +1,3 @@
-import TablaAmbiental from "@/app/components/TablaAmbiental";
-
 async function loadData() {
   const response = await fetch(`${process.env.URL}/api/ambiental`, {
     cache: "no-store",
