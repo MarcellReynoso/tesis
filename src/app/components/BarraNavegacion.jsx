@@ -9,9 +9,9 @@ import Link from "next/link";
 
 const navigation = [
   { name: "Dashboard", href: "/datos" },
-  { name: "Sensores", href: "#" },
-  { name: "Ambiental", href: "#" },
-  { name: "Corporal", href: "#" },
+  { name: "Sensores", href: "/sensores" },
+  { name: "Ambiental", href: "/ambiental" },
+  { name: "Corporal", href: "/corporal" },
 ];
 
 export default function BarraNavegacion() {

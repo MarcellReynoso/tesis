@@ -2,7 +2,7 @@ import React from 'react'
 
 function page() {
   return (
-    <div>{"Hello I'm alive"}</div>
+    <div>Corporal</div>
   )
 }
 

@@ -24,10 +24,11 @@ export async function POST(request) {
     const form = await request.formData();
     const temperaturaCorporal = form.get("temperaturaCorporal");
     const frecuenciaCardiaca = form.get("frecuenciaCardiaca");
+    const kitId = form.get("kitId");
 
     const results = await conn.query(
-      "INSERT INTO corporal (temperaturaCorporal, frecuenciaCardiaca) VALUES (?, ?)",
-      [temperaturaCorporal, frecuenciaCardiaca]
+      "INSERT INTO corporal (temperaturaCorporal, frecuenciaCardiaca, kitId ) VALUES (?, ?, ?)",
+      [temperaturaCorporal, frecuenciaCardiaca, kitId]
     );
 
     return NextResponse.json({

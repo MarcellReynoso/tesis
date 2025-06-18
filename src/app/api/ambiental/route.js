@@ -6,7 +6,6 @@ export async function GET() {
     const [results, fields] = await conn.query(
       "SELECT * FROM ambiental ORDER BY fecha DESC"
     );
-    // console.log(fields);
     return NextResponse.json(results);
   } catch (error) {
     console.log(error);
@@ -24,10 +23,11 @@ export async function POST(request) {
     const form = await request.formData();
     const temperatura = form.get("temperatura");
     const humedad = form.get("humedad");
+    const kitId = form.get("kitId");
 
     const results = await conn.query(
-      "INSERT INTO ambiental (temperatura, humedad) VALUES (?, ?)",
-      [temperatura, humedad]
+      "INSERT INTO ambiental (temperatura, humedad, kitId) VALUES (?, ?, ?)",
+      [temperatura, humedad, kitId]
     );
     return NextResponse.json({
       results,

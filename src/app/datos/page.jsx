@@ -9,7 +9,7 @@ import TablaFrecuenciaCardiaca from "../components/TablaFrecuenciaCardiaca";
 
 export default function page() {
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-auto">
       <h1 className="text-[#033e42] roboto h1 text-3xl md:text-4xl font-bold py-5 text-center lg:text-left">
         {("Dashboard principal").toUpperCase()}
       </h1>
