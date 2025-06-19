@@ -1,4 +1,4 @@
-name: Desplegar en CentOS via SSH (con contraseña)
+name: Despligue continuo
 
 on:
   push:
