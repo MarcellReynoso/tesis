@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
+import { getApiPath } from "@/lib/utils";
 
 export default function LineChart({ apiUrl, campo, label }) {
   const chartRef = useRef(null);
@@ -8,7 +9,7 @@ export default function LineChart({ apiUrl, campo, label }) {
   const [datos, setDatos] = useState([]);
 
   async function fetchData() {
-    const response = await fetch(apiUrl);
+    const response = await fetch(getApiPath(apiUrl));
     const data = await response.json();
     // console.log(data);
     const ultimos = data.slice(0, 10).reverse();

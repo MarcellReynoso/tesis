@@ -12,11 +12,6 @@ export default function Page() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Prueba con API de test
-        const testRes = await fetch(getApiPath("/api/test"));
-        const testData = await testRes.json();
-        console.log("Test API response:", testData);
-
         const res = await fetch(getApiPath("/api/ambiental/temperatura"));
         const data = await res.json();
 
@@ -82,7 +77,7 @@ export default function Page() {
               {/* Gráfico ocupa el espacio restante */}
               <div className="hidden lg:block">
                 <LineChart
-                  apiUrl={getApiPath(`/api/ambiental/${kit.kitId}`)}
+                  apiUrl={`/api/ambiental/${kit.kitId}`}
                   campo="temperatura"
                   label="Tendencia de temperatura (ºC)"
                 />
