@@ -27,8 +27,8 @@ jobs:
             # Instalar dependencias
             npm install
 
-            # Construir proyecto (si es necesario)
-            npm run build
+            # Construir proyecto en modo producción
+            NODE_ENV=production npm run build
 
             echo "🔄 Reiniciando aplicación..."
             pm2 restart tesis || echo "PM2 no está corriendo o no se encontró el proceso"

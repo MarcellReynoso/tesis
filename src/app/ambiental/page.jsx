@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Card from "@/app/components/Card";
 import LineChart from "@/app/components/LineChart";
 
@@ -34,9 +35,11 @@ export default function Page() {
       <div className="flex flex-col gap-10 lg:flex-row items-center py-5">
         {/* Columna 1: Imagen */}
         <div className="flex justify-center px-4">
-          <img
+          <Image
             src="/img/temperatura.png"
             alt="Temperatura"
+            width={100}
+            height={100}
             className="w-[100px]"
           />
         </div>
