@@ -37,7 +37,13 @@ export default function BarraNavegacion() {
             {/* Logo */}
             <div className="">
               <Link href={"/"}>
-                <img alt="Logo" src="/img/logoUNJBGBlanco.png" className="h-20" />
+                <Image 
+                  alt="Logo" 
+                  src="/img/logoUNJBGBlanco.png" 
+                  width={200}
+                  height={80}
+                  className="h-20 w-auto" 
+                />
               </Link>
             </div>
 
