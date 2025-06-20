@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import LineChart from "../components/LineChart";
 import KPI from "../components/KPI";
@@ -9,7 +8,7 @@ import TablaFrecuenciaCardiaca from "../components/TablaFrecuenciaCardiaca";
 
 export default function page() {
   return (
-    <div className="container mx-auto py-8 px-auto">
+    <div>
       <h1 className="text-[#033e42] roboto h1 text-3xl md:text-4xl font-bold py-5 text-center lg:text-left">
         {("Dashboard principal").toUpperCase()}
       </h1>
@@ -19,7 +18,6 @@ export default function page() {
           imagen: "/img/temperatura.png",
           apiKPI: "/api/ambiental/kpis/temperatura",
           campoKPI: "temperatura",
-          labelKPI: "Temperatura",
           apiChart: "/api/ambiental",
           campoChart: "temperatura",
           labelChart: "Temperatura (ºC)",
@@ -30,7 +28,6 @@ export default function page() {
           imagen: "/img/humedad.png",
           apiKPI: "/api/ambiental/kpis/humedad",
           campoKPI: "humedad",
-          labelKPI: "Humedad",
           apiChart: "/api/ambiental",
           campoChart: "humedad",
           labelChart: "Humedad (%)",
@@ -41,7 +38,6 @@ export default function page() {
           imagen: "/img/temperaturaCorporal.png",
           apiKPI: "/api/corporal/kpis/temperatura",
           campoKPI: "temperaturaCorporal",
-          labelKPI: "Temperatura corporal",
           apiChart: "/api/corporal",
           campoChart: "temperaturaCorporal",
           labelChart: "Temperatura corporal (ºC)",
@@ -52,7 +48,6 @@ export default function page() {
           imagen: "/img/bpm.png",
           apiKPI: "/api/corporal/kpis/bpm",
           campoKPI: "frecuenciaCardiaca",
-          labelKPI: "Frecuencia cardiaca",
           apiChart: "/api/corporal",
           campoChart: "frecuenciaCardiaca",
           labelChart: "Latidos por minuto (bpm)",
@@ -61,29 +56,28 @@ export default function page() {
       ].map((seccion, index) => (
         <div key={index} className="flex flex-col gap-6 py-6">
           <div className="flex flex-col lg:flex-row gap-6">
-            <div className="w-full lg:w-1/3 flex flex-col items-center lg:items-start gap-4¡ mx-auto">
-              <h2 className="roboto text-2xl font-semibold text-center lg:text-left mb-4">
+            <div className="w-full lg:w-1/4 flex flex-col items-center lg:items-start gap-4¡ mx-auto">
+              <h2 className="roboto text-xl font-semibold lg:text-left mb-4">
                 {seccion.titulo}
               </h2>
               <div className="flex items-center">
-                <div className="w-[150px] sm:w-[200px] flex justify-center">
+                <div className="w-[150px] sm:w-[150px] flex justify-center">
                   <img
                     src={seccion.imagen}
-                    alt={seccion.labelKPI}
+                    alt={seccion.titulo}
                     className="w-full"
                   />
                 </div>
                 <KPI
                   apiUrl={seccion.apiKPI}
                   campo={seccion.campoKPI}
-                  label={seccion.labelKPI}
                 />
               </div>
             </div>
 
             <div className="w-full lg:w-2/3 flex flex-col lg:flex-row gap-6">
-              <div className="w-full lg:w-2/3 flex flex-col gap-2">
-                <h4 className="font-semibold text-2xl roboto lg:text-left">
+              <div className="w-full lg:w-2/3 grid content-between">
+                <h4 className="font-semibold text-xl roboto lg:text-left">
                   TENDENCIA
                 </h4>
                 <LineChart
@@ -92,8 +86,8 @@ export default function page() {
                   label={seccion.labelChart}
                 />
               </div>
-              <div className="w-full lg:w-1/3 flex flex-col gap-2">
-                <h4 className="font-semibold text-2xl roboto lg:text-left">
+              <div className="w-full lg:w-1/3 grid content-between">
+                <h4 className="font-semibold text-xl roboto lg:text-left">
                   ÚLTIMOS DATOS
                 </h4>
                 <seccion.Tabla />

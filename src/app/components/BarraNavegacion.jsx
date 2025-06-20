@@ -8,10 +8,10 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 const navigation = [
-  { name: "Dashboard", href: "/datos" },
-  { name: "Sensores", href: "/sensores" },
+  { name: "Dashboard general", href: "/datos" },
   { name: "Ambiental", href: "/ambiental" },
   { name: "Corporal", href: "/corporal" },
+  { name: "Sensores", href: "/sensores" },
 ];
 
 export default function BarraNavegacion() {

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-export default function KPI({ apiUrl, campo, label }) {
+export default function KPI({ apiUrl, campo}) {
   const [valorActual, setValorActual] = useState(null);
   const [valorPromedio, setValorPromedio] = useState(null);
 

@@ -18,7 +18,7 @@ export default function TablaTemperatura() {
   }, []);
 
   return (
-    <div className="pb-4">
+    <div>
       <table className="w-full text-xs lg:text-base">
         <thead className="tarjeta text-white">
           <tr>

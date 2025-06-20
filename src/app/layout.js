@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <BarraNavegacion />
-        {children}
+        <main className="container mx-auto lg:px-20 px-5 py-8">{children}</main>
       </body>
     </html>
   );

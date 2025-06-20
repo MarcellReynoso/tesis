@@ -10,7 +10,9 @@ export default function LineChart({ apiUrl, campo, label }) {
   async function fetchData() {
     const response = await fetch(apiUrl);
     const data = await response.json();
+    // console.log(data);
     const ultimos = data.slice(0, 10).reverse();
+    console.log(ultimos);
     setDatos(ultimos);
   }
 
@@ -42,15 +44,16 @@ export default function LineChart({ apiUrl, campo, label }) {
           {
             data: valores,
             fill: false,
-            borderColor: "#006a71",
+            borderColor: "#51722c",
             backgroundColor: "#84d7dd",
-            tension: 0.3,
+            tension: 0.5,
             showLine: true,
+            pointStyle: false,
           },
         ],
       },
       options: {
-        responsive: true,
+        responsive: false,
         animation: false,
         plugins: {
           legend: { display: false },
@@ -73,8 +76,8 @@ export default function LineChart({ apiUrl, campo, label }) {
   }, [datos, campo, label]);
 
   return (
-    <div>
-      <canvas ref={chartRef} />
+    <div className="">
+      <canvas width="700" height="120" ref={chartRef} />
     </div>
   );
 }
