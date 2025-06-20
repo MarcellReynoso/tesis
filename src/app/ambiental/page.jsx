@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/app/components/Card";
 import LineChart from "@/app/components/LineChart";
+import TablaTemperatura from "../components/TablaTemperatura";
 
 export default function Page() {
   const [temperaturaPromedio, setTemperaturaPromedio] = useState(null);
@@ -9,7 +10,8 @@ export default function Page() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("/api/ambiental/temperatura");
+      const res = await fetch(`/api/ambiental/temperatura`);
+      console.log(`/api/ambiental/temperatura`);
       const data = await res.json();
 
       setTemperaturaPromedio(data.temperaturaPromedio);
@@ -24,13 +26,15 @@ export default function Page() {
   return (
     <div className="p-6">
       <h1 className="text-[#033e42] roboto text-3xl md:text-4xl font-bold py-5 text-center lg:text-left">
-       VARIABLES AMBIENTALES
+        VARIABLES AMBIENTALES
       </h1>
       <h2 className="text-[#033e42] roboto text-2xl md:text-3xl font-semibold py-5 text-center lg:text-left">
         Temperatura ambiental (ºC)
       </h2>
+      <h3 className="text-[#033e42] roboto text-xl md:text-2xl  py-5 text-center lg:text-left">
+        Dashboard
+      </h3>
 
-      {/* ✅ Contenedor general en flex */}
       <div className="flex flex-col gap-10 lg:flex-row items-center py-5">
         {/* Columna 1: Imagen */}
         <div className="flex justify-center px-4">
@@ -56,7 +60,10 @@ export default function Page() {
         {/* Columna 3: KPIs y Gráficos */}
         <div className="flex flex-col gap-4 flex-1">
           {kits.map((kit) => (
-            <div key={kit.kitId} className="flex flex-col lg:flex-row gap-4 items-center">
+            <div
+              key={kit.kitId}
+              className="flex flex-col lg:flex-row gap-4 items-center"
+            >
               {/* ESTE div define el ancho del Card */}
               <div className="w-[200px] h-[120px]">
                 <Card
@@ -77,6 +84,22 @@ export default function Page() {
             </div>
           ))}
         </div>
+      </div>
+      <h3 className="text-[#033e42] roboto text-xl md:text-2xl  py-5 text-center lg:text-left">
+        Información por Kit
+      </h3>
+
+      <div className="flex flex-col justify-between gap-10 lg:flex-row items-center py-5">
+        {kits.map((k) => (
+          <div key={k.kitId}>
+            <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-5 text-center lg:text-left">
+              Kit {k.kitId}
+            </h4>
+            <TablaTemperatura
+              apiURL={`/api/ambiental/${k.kitId}`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
