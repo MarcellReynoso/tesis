@@ -11,4 +11,26 @@ export function getImagePath(imagePath) {
   // En producción, Next.js automáticamente agrega el basePath a las rutas
   // que comienzan con /, así que simplemente devolvemos la ruta
   return imagePath;
+}
+
+/**
+ * Función para obtener la URL base de la aplicación
+ */
+export function getBaseUrl() {
+  if (typeof window !== 'undefined') {
+    // En el cliente
+    return window.location.origin;
+  }
+  
+  // En el servidor, usar una variable de entorno o valor por defecto
+  return process.env.NEXT_PUBLIC_BASE_URL || 'https://tutupaca.unjbg.edu.pe';
+}
+
+/**
+ * Función para construir rutas absolutas de imágenes
+ */
+export function getAbsoluteImagePath(imagePath) {
+  const baseUrl = getBaseUrl();
+  const basePath = process.env.NODE_ENV === 'production' ? '/marcell' : '';
+  return `${baseUrl}${basePath}${imagePath}`;
 } 
