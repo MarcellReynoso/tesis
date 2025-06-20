@@ -6,7 +6,7 @@ export default function TablaTemperatura({apiURL}) {
   const [datos, setDatos] = useState([]);
 
   async function fetchData() {
-    const response = await fetch(getApiPath("/api/ambiental"));
+    const response = await fetch(getApiPath(apiURL));
     const data = await response.json();
     const ultimos = data.slice(0, 10);
     setDatos(ultimos);
