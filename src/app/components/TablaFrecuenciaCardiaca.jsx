@@ -6,11 +6,7 @@ export default function TablaFrecuenciaCardiaca() {
   const [datos, setDatos] = useState([]);
 
   async function fetchData() {
-<<<<<<< HEAD
-    const response = await fetch(`${process.env.HOSTNAME}/api/corporal`);
-=======
     const response = await fetch(getApiPath("/api/corporal"));
->>>>>>> 3c7b3f64763050fb31546be81c57b8b768ccca6f
     const data = await response.json();
     const ultimos = data.slice(0, 10);
     setDatos(ultimos);
