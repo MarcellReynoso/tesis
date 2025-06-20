@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { getApiPath } from "@/lib/utils";
 
 export default function KPI({ apiUrl, campo}) {
   const [valorActual, setValorActual] = useState(null);
@@ -8,7 +9,7 @@ export default function KPI({ apiUrl, campo}) {
   useEffect(() => {
     async function fetchKPI() {
       try {
-        const res = await fetch(apiUrl);
+        const res = await fetch(getApiPath(apiUrl));
         const data = await res.json();
         setValorActual(data[`${campo}Actual`]);
         setValorPromedio(data[`${campo}Promedio`]);

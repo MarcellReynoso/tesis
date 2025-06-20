@@ -1,8 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import OptimizedImage from "@/app/components/OptimizedImage";
 import Card from "@/app/components/Card";
 import LineChart from "@/app/components/LineChart";
+<<<<<<< HEAD
 import TablaTemperatura from "../components/TablaTemperatura";
+=======
+import { getApiPath } from "@/lib/utils";
+>>>>>>> 3c7b3f64763050fb31546be81c57b8b768ccca6f
 
 export default function Page() {
   const [temperaturaPromedio, setTemperaturaPromedio] = useState(null);
@@ -10,12 +15,21 @@ export default function Page() {
 
   useEffect(() => {
     async function fetchData() {
+<<<<<<< HEAD
       const res = await fetch(`/api/ambiental/temperatura`);
       console.log(`/api/ambiental/temperatura`);
       const data = await res.json();
+=======
+      try {
+        const res = await fetch(getApiPath("/api/ambiental/temperatura"));
+        const data = await res.json();
+>>>>>>> 3c7b3f64763050fb31546be81c57b8b768ccca6f
 
-      setTemperaturaPromedio(data.temperaturaPromedio);
-      setKits(data.temperaturaActualPorKit);
+        setTemperaturaPromedio(data.temperaturaPromedio);
+        setKits(data.temperaturaActualPorKit);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
 
     fetchData();
@@ -38,9 +52,11 @@ export default function Page() {
       <div className="flex flex-col gap-10 lg:flex-row items-center py-5">
         {/* Columna 1: Imagen */}
         <div className="flex justify-center px-4">
-          <img
+          <OptimizedImage
             src="/img/temperatura.png"
             alt="Temperatura"
+            width={100}
+            height={100}
             className="w-[100px]"
           />
         </div>

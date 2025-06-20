@@ -1,4 +1,5 @@
 import React from "react";
+import OptimizedImage from "../components/OptimizedImage";
 import LineChart from "../components/LineChart";
 import KPI from "../components/KPI";
 import TablaTemperatura from "../components/TablaTemperatura";
@@ -62,9 +63,11 @@ export default function page() {
               </h2>
               <div className="flex items-center">
                 <div className="w-[150px] sm:w-[150px] flex justify-center">
-                  <img
+                  <OptimizedImage
                     src={seccion.imagen}
                     alt={seccion.titulo}
+                    width={150}
+                    height={150}
                     className="w-full"
                   />
                 </div>

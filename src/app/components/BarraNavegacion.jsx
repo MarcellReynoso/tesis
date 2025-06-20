@@ -4,8 +4,8 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
 import Link from "next/link";
+import OptimizedImage from "./OptimizedImage";
 
 const navigation = [
   { name: "Dashboard general", href: `${process.env.HOSTNAME}/datos` },
@@ -37,7 +37,13 @@ export default function BarraNavegacion() {
             {/* Logo */}
             <div className="">
               <Link href={"/"}>
-                <img alt="Logo" src="/img/logoUNJBGBlanco.png" className="h-20" />
+                <OptimizedImage 
+                  alt="Logo" 
+                  src="/img/logoUNJBGBlanco.png"
+                  width={200}
+                  height={80}
+                  className="h-20 w-auto" 
+                />
               </Link>
             </div>
 
