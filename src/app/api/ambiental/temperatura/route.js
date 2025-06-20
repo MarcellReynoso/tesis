@@ -3,11 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const [temperaturaPromedio] = await conn.query(`
-      SELECT ROUND(AVG(temperatura), 2) AS temperaturaPromedio
-      FROM ambiental
-    `);
-
+    // Obtener la temperatura actual por cada kit
     const [queryTemperaturaActualPorKit] = await conn.query(`
       SELECT a.kitId, a.temperatura
       FROM ambiental a
@@ -26,20 +22,20 @@ export async function GET() {
       })
     );
 
+    const sumaTemperaturas = temperaturaActualPorKit.reduce(
+      (acum, kit) => acum + kit.temperaturaActual,
+      0
+    );
+
+    const temperaturaPromedio = parseFloat(
+      (sumaTemperaturas / temperaturaActualPorKit.length).toFixed(2)
+    );
+
     return NextResponse.json({
-      temperaturaPromedio: parseFloat(
-        temperaturaPromedio[0].temperaturaPromedio
-      ),
+      temperaturaPromedio,
       temperaturaActualPorKit,
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        message: error.message,
-      },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
