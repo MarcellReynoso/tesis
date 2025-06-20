@@ -33,4 +33,18 @@ export function getAbsoluteImagePath(imagePath) {
   const baseUrl = getBaseUrl();
   const basePath = process.env.NODE_ENV === 'production' ? '/marcell' : '';
   return `${baseUrl}${basePath}${imagePath}`;
+}
+
+/**
+ * Función para obtener la ruta correcta de las APIs según el entorno
+ */
+export function getApiPath(apiPath) {
+  // Si ya es una URL completa, la devolvemos tal como está
+  if (apiPath.startsWith('http://') || apiPath.startsWith('https://')) {
+    return apiPath;
+  }
+  
+  // En producción, agregar el basePath
+  const isProduction = process.env.NODE_ENV === 'production';
+  return isProduction ? `/marcell${apiPath}` : apiPath;
 } 

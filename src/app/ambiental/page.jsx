@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import OptimizedImage from "@/app/components/OptimizedImage";
 import Card from "@/app/components/Card";
 import LineChart from "@/app/components/LineChart";
+import { getApiPath } from "@/lib/utils";
 
 export default function Page() {
   const [temperaturaPromedio, setTemperaturaPromedio] = useState(null);
@@ -10,11 +11,20 @@ export default function Page() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("/api/ambiental/temperatura");
-      const data = await res.json();
+      try {
+        // Prueba con API de test
+        const testRes = await fetch(getApiPath("/api/test"));
+        const testData = await testRes.json();
+        console.log("Test API response:", testData);
 
-      setTemperaturaPromedio(data.temperaturaPromedio);
-      setKits(data.temperaturaActualPorKit);
+        const res = await fetch(getApiPath("/api/ambiental/temperatura"));
+        const data = await res.json();
+
+        setTemperaturaPromedio(data.temperaturaPromedio);
+        setKits(data.temperaturaActualPorKit);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
 
     fetchData();
@@ -72,7 +82,7 @@ export default function Page() {
               {/* Gráfico ocupa el espacio restante */}
               <div className="hidden lg:block">
                 <LineChart
-                  apiUrl={`/api/ambiental/${kit.kitId}`}
+                  apiUrl={getApiPath(`/api/ambiental/${kit.kitId}`)}
                   campo="temperatura"
                   label="Tendencia de temperatura (ºC)"
                 />
