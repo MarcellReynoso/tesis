@@ -40,21 +40,25 @@ export default function Page() {
 
   return (
     <div className="px-6">
-      <h1 className="text-[#033e42] roboto text-2xl md:text-4xl font-bold py-2 text-left">
+      <h1 className="text-[#033e42] roboto text-2xl md:text-4xl font-bold py-2 md:text-left text-center">
         VARIABLES AMBIENTALES
       </h1>
-      <TabGroup>
-        <TabList className={"flex gap-4 py-3"}>
+      <TabGroup className={"bg-red"}>
+        <TabList
+          className={
+            "flex justify-center md:justify-start gap-10 mx-auto pr-4 md:pr-0 py-3 "
+          }
+        >
           <Tab
             className={
-              "rounded-full px-3 py-2 text-md text-[#033e42] roboto font-semibold focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
+              "rounded-full px-3 py-2 text-xl md:text-lg text-[#033e42] roboto focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
             }
           >
             Temperatura
           </Tab>
           <Tab
             className={
-              "rounded-full px-3 py-2 text-md text-[#033e42] roboto font-semibold focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
+              "rounded-full px-3 py-2 text-xl md:text-lg text-[#033e42] roboto font-semibold focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
             }
           >
             Humedad
@@ -63,10 +67,10 @@ export default function Page() {
         <TabPanels>
           <TabPanel>
             {/* Temperatura */}
-            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 text-left">
+            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
               Temperatura ambiental (ºC)
             </h2>
-            <h3 className="hidden md:block text-[#033e42] roboto text-xl md:text-2xl  py-2 text-center lg:text-left">
+            <h3 className="hidden md:block text-[#033e42] roboto text-xl md:text-2xl  py-2 text-center md:text-left text-center">
               Dashboard
             </h3>
 
@@ -94,9 +98,11 @@ export default function Page() {
                 </div>
               </div>
 
-              <h3 className="flex w-full md:hidden text-[#033e42] roboto text-xl text-left">
-                Temperaturas actuales
-              </h3>
+              <div>
+                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center">
+                  Temperaturas actuales
+                </h3>
+              </div>
 
               {/* Columna 3: KPIs y Gráficos */}
               <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
@@ -126,10 +132,10 @@ export default function Page() {
                 ))}
               </div>
             </div>
-            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center text-left pt-5">
+            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center md:text-left pt-5">
               Información por Kit
             </h3>
-            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center pb-10">
+            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center">
               {kitsTemperatura.map((k) => (
                 <div key={k.kitId}>
                   <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-3 text-left">
@@ -145,7 +151,7 @@ export default function Page() {
           </TabPanel>
           <TabPanel>
             {/* Humedad */}
-            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 text-left">
+            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
               Humedad relativa (%)
             </h2>
             <h3 className="hidden md:block text-[#033e42] roboto text-xl md:text-2xl  py-2 text-center lg:text-left">
@@ -153,12 +159,10 @@ export default function Page() {
             </h3>
 
             <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
-              <div className="flex justify-center px-4">
+              <div className="flex justify-center ">
                 <OptimizedImage
                   src="/img/humedad.png"
                   alt="Humedad"
-                  width={100}
-                  height={100}
                   className="w-[100px]"
                 />
               </div>
@@ -173,9 +177,11 @@ export default function Page() {
                 </div>
               </div>
 
-              <h3 className="flex w-full md:hidden text-[#033e42] roboto text-xl text-left">
-                Humedades actuales
-              </h3>
+              <div>
+                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center">
+                  Humedades actuales
+                </h3>
+              </div>
 
               <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
                 {kitsHumedad.map((kit) => (
@@ -202,11 +208,11 @@ export default function Page() {
               </div>
             </div>
 
-            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center text-left pt-5">
+            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center md:text-left pt-5">
               Información por Kit
             </h3>
 
-            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center pb-10">
+            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center">
               {kitsHumedad.map((k) => (
                 <div key={k.kitId}>
                   <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-3 text-left">
