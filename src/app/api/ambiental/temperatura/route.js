@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Obtener la temperatura actual por cada kit
     const [queryTemperaturaActualPorKit] = await conn.query(`
-      SELECT a.kitId, a.temperatura
+      SELECT DISTINCT a.kitId, a.temperatura
       FROM ambiental a
       INNER JOIN (
           SELECT kitId, MAX(fecha) AS max_fecha

@@ -12,9 +12,6 @@ export default function Page() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/api/ambiental/temperatura`);
-      console.log(`/api/ambiental/temperatura`);
-      const data = await res.json();
       try {
         const res = await fetch(getApiPath("/api/ambiental/temperatura"));
         const data = await res.json();
@@ -22,10 +19,9 @@ export default function Page() {
         setTemperaturaPromedio(data.temperaturaPromedio);
         setKits(data.temperaturaActualPorKit);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error obteniendo la API ambienal/temperatura:", error);
       }
     }
-
     fetchData();
     const intervalo = setInterval(fetchData, 5000);
     return () => clearInterval(intervalo);
@@ -67,7 +63,9 @@ export default function Page() {
           </div>
         </div>
 
-     <h3 className="flex w-full md:hidden text-[#033e42] roboto text-xl text-left">Temperaturas actuales</h3>
+        <h3 className="flex w-full md:hidden text-[#033e42] roboto text-xl text-left">
+          Temperaturas actuales
+        </h3>
 
         {/* Columna 3: KPIs y Gráficos */}
         <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
@@ -97,7 +95,7 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center text-left pt-5" >
+      <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center text-left pt-5">
         Información por Kit
       </h3>
       <div className="flex flex-col justify-between gap-10 lg:flex-row items-center">
@@ -106,9 +104,7 @@ export default function Page() {
             <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-3 text-left">
               Kit {k.kitId}
             </h4>
-            <TablaTemperatura
-              apiURL={`/api/ambiental/${k.kitId}`}
-            />
+            <TablaTemperatura apiURL={`/api/ambiental/${k.kitId}`} />
           </div>
         ))}
       </div>
