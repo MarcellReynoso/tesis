@@ -1,16 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getApiPath } from "@/lib/utils";
 
-export default function TablaHumedad() {
+export default function Tabla({ apiURL, campo }) {
   const [datos, setDatos] = useState([]);
 
-  async function fetchData() {
-    const response = await fetch(getApiPath("/api/ambiental"));
-    const data = await response.json();
-    const ultimos = data.slice(0, 10);
-    setDatos(ultimos);
-  }
+  const fetchData = async () => {
+    try {
+      const response = await fetch(getApiPath(apiURL));
+      const data = await response.json();
+      setDatos(data.slice(0, 10));
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -18,17 +21,15 @@ export default function TablaHumedad() {
     return () => clearInterval(intervalo);
   }, []);
 
+  const label = campo === "temperatura" ? "Temperatura (°C)" : "Humedad (%)";
+
   return (
     <div className="pb-4">
       <table className="w-full text-xs lg:text-base">
         <thead className="tarjeta text-white">
           <tr>
-            <th scope="col" className="px-6  py-4">
-              Fecha
-            </th>
-            <th scope="col" className="px-6">
-              Humedad
-            </th>
+            <th className="px-6 py-4">Fecha</th>
+            <th className="px-6">{label}</th>
           </tr>
         </thead>
         <tbody>
@@ -37,13 +38,8 @@ export default function TablaHumedad() {
               key={d.id}
               className="text-dark bg-white border-b dark:border-gray-700 text-center"
             >
-              <td
-                scope="row"
-                className="min-w-[150px]"
-              >
-                {new Date(d.fecha).toLocaleString()}
-              </td>
-              <td className="px-6">{d.humedad}</td>
+              <td className="min-w-[150px]">{new Date(d.fecha).toLocaleString()}</td>
+              <td className="px-6">{d[campo]}</td>
             </tr>
           ))}
         </tbody>
