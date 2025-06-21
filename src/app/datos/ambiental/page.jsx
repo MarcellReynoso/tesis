@@ -1,5 +1,5 @@
 async function loadData() {
-  const response = await fetch(`${process.env.URL}/api/ambiental`, {
+  const response = await fetch(`/api/ambiental`, {
     cache: "no-store",
   });
   const data = await response.json();

@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getApiPath } from "@/lib/utils";
 
 export default function TablaTemperaturaCorporal() {
   const [datos, setDatos] = useState([]);
 
   async function fetchData() {
-    const response = await fetch(getApiPath("/api/corporal"));
+    const response = await fetch("/api/corporal");
     const data = await response.json();
     const ultimos = data.slice(0, 10);
     setDatos(ultimos);

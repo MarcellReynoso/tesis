@@ -17,19 +17,20 @@ export default function page() {
         {
           titulo: "TEMPERATURA AMBIENTAL (ºC)",
           imagen: "/img/temperatura.png",
-          apiKPI: `${process.env.HOSTNAME}/api/ambiental/kpis/temperatura`,
+          apiKPI: "/api/ambiental/kpis/temperatura",
           campoKPI: "temperatura",
-          apiChart: `${process.env.HOSTNAME}/api/ambiental`,
+          apiChart: "/api/ambiental",
           campoChart: "temperatura",
           labelChart: "Temperatura (ºC)",
           Tabla: TablaTemperatura,
+          apiURL: "/api/ambiental",
         },
         {
           titulo: "HUMEDAD RELATIVA (%)",
           imagen: "/img/humedad.png",
-          apiKPI: `${process.env.HOSTNAME}/api/ambiental/kpis/humedad`,
+          apiKPI: "/api/ambiental/kpis/humedad",
           campoKPI: "humedad",
-          apiChart: `${process.env.HOSTNAME}/api/ambiental`,
+          apiChart: "/api/ambiental",
           campoChart: "humedad",
           labelChart: "Humedad (%)",
           Tabla: TablaHumedad,
@@ -37,9 +38,9 @@ export default function page() {
         {
           titulo: "TEMPERATURA CORPORAL (ºC)",
           imagen: "/img/temperaturaCorporal.png",
-          apiKPI: `${process.env.HOSTNAME}/api/corporal/kpis/temperatura`,
+          apiKPI: "/api/corporal/kpis/temperatura",
           campoKPI: "temperaturaCorporal",
-          apiChart: `${process.env.HOSTNAME}/api/corporal`,
+          apiChart: "/api/corporal",
           campoChart: "temperaturaCorporal",
           labelChart: "Temperatura corporal (ºC)",
           Tabla: TablaTemperaturaCorporal,
@@ -47,9 +48,9 @@ export default function page() {
         {
           titulo: "FRECUENCIA CARDIACA (bpm)",
           imagen: "/img/bpm.png",
-          apiKPI: `${process.env.HOSTNAME}/api/corporal/kpis/bpm`,
+          apiKPI: "/api/corporal/kpis/bpm",
           campoKPI: "frecuenciaCardiaca",
-          apiChart: `${process.env.HOSTNAME}/api/corporal`,
+          apiChart: "/api/corporal",
           campoChart: "frecuenciaCardiaca",
           labelChart: "Latidos por minuto (bpm)",
           Tabla: TablaFrecuenciaCardiaca,
@@ -93,7 +94,11 @@ export default function page() {
                 <h4 className="font-semibold text-xl roboto lg:text-left">
                   ÚLTIMOS DATOS
                 </h4>
-                <seccion.Tabla />
+                {seccion.Tabla === TablaTemperatura ? (
+                  <seccion.Tabla apiURL={seccion.apiURL} />
+                ) : (
+                  <seccion.Tabla />
+                )}
               </div>
             </div>
           </div>

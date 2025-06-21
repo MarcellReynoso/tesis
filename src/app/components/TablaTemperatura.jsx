@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getApiPath } from "@/lib/utils";
 
 export default function TablaTemperatura({apiURL}) {
   const [datos, setDatos] = useState([]);
 
   async function fetchData() {
-    const response = await fetch(getApiPath(apiURL));
+    const response = await fetch(apiURL);
     const data = await response.json();
     const ultimos = data.slice(0, 10);
     setDatos(ultimos);

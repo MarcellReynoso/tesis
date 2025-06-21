@@ -4,7 +4,6 @@ import OptimizedImage from "@/app/components/OptimizedImage";
 import Card from "@/app/components/Card";
 import LineChart from "@/app/components/LineChart";
 import TablaTemperatura from "../components/TablaTemperatura";
-import { getApiPath } from "@/lib/utils";
 
 export default function Page() {
   const [temperaturaPromedio, setTemperaturaPromedio] = useState(null);
@@ -16,7 +15,7 @@ export default function Page() {
       console.log(`/api/ambiental/temperatura`);
       const data = await res.json();
       try {
-        const res = await fetch(getApiPath("/api/ambiental/temperatura"));
+        const res = await fetch("/api/ambiental/temperatura");
         const data = await res.json();
 
         setTemperaturaPromedio(data.temperaturaPromedio);
