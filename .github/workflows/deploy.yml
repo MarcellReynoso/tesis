@@ -3,7 +3,7 @@ name: Despligue continuo
 on:
   push:
     branches:
-      - master   # Cambia si usas otra rama
+      - feature/config-next-to-deploy   # Cambia si usas otra rama
   workflow_dispatch:
 jobs:
   deploy:
