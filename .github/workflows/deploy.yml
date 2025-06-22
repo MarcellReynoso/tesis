@@ -21,16 +21,84 @@ jobs:
             echo "📦 Actualizando proyecto..."
             cd ${{ secrets.MARCELL_PATH }}
 
+            # Verificar estado actual
+            echo "📋 Estado actual del repositorio:"
+            git status
+            git log --oneline -5
+
+            # Guardar cambios locales (como .env) antes del pull
+            echo "💾 Guardando cambios locales..."
+            git stash push -m "Cambios locales antes del pull - $(date)"
+
             # Pull desde GitHub
-            git pull origin master
+            echo "⬇️ Descargando cambios desde GitHub..."
+            git pull origin feature/config-next-to-deploy
+
+            # Restaurar cambios locales (como .env)
+            echo "🔄 Restaurando cambios locales..."
+            git stash pop || echo "No hay cambios locales para restaurar"
+
+            # Verificar cambios descargados
+            echo "📋 Cambios descargados:"
+            git log --oneline -3
+
+            # Limpiar caché de npm
+            echo "🧹 Limpiando caché..."
+            npm cache clean --force
+
+            # Eliminar node_modules y package-lock.json para instalación limpia
+            echo "🗑️ Eliminando dependencias anteriores..."
+            rm -rf node_modules package-lock.json
 
             # Instalar dependencias
+            echo "📦 Instalando dependencias..."
             npm install
 
+            # Limpiar build anterior
+            echo "🧹 Limpiando build anterior..."
+            rm -rf .next
+
             # Construir proyecto en modo producción
+            echo "🔨 Construyendo proyecto..."
             NODE_ENV=production npm run build
 
-            echo "🔄 Reiniciando aplicación..."
-            pm2 restart tesis || echo "PM2 no está corriendo o no se encontró el proceso"
+            # Verificar que el build se completó correctamente
+            if [ ! -d ".next" ]; then
+              echo "❌ Error: El build no se completó correctamente"
+              exit 1
+            fi
+
+            # Crear directorio de logs si no existe
+            mkdir -p logs
+
+            echo "🔄 Reiniciando aplicación con PM2..."
+            
+            # Detener proceso existente si existe
+            pm2 delete tesis 2>/dev/null || echo "No había proceso previo"
+            
+            # Verificar que estamos en el directorio correcto
+            echo "📁 Directorio actual: $(pwd)"
+            
+            # Verificar que ecosystem.config.js existe
+            if [ ! -f "ecosystem.config.js" ]; then
+              echo "❌ Error: ecosystem.config.js no existe"
+              exit 1
+            fi
+            
+            # Iniciar con configuración de ecosystem
+            echo "🚀 Iniciando PM2..."
+            pm2 start ecosystem.config.js
+            
+            # Verificar estado
+            echo "📊 Estado de PM2:"
+            pm2 list
+            
+            # Guardar configuración de PM2
+            pm2 save
+
+            # Limpiar caché de nginx si es necesario
+            echo "🔄 Reiniciando nginx..."
+            sudo systemctl reload nginx
 
             echo "✅ Despliegue completado"
+            echo "🌐 La aplicación debería estar disponible en: https://tutupaca.unjbg.edu.pe/marcell"
