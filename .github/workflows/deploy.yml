@@ -76,16 +76,49 @@ jobs:
             # Detener proceso existente si existe
             pm2 delete tesis 2>/dev/null || echo "No había proceso previo"
             
+            # Verificar que estamos en el directorio correcto
+            echo "📁 Directorio actual: $(pwd)"
+            echo "📁 Contenido del directorio:"
+            ls -la
+            
+            # Verificar que ecosystem.config.js existe
+            if [ ! -f "ecosystem.config.js" ]; then
+              echo "❌ Error: ecosystem.config.js no existe"
+              exit 1
+            fi
+            
+            # Mostrar configuración de PM2
+            echo "📋 Configuración de PM2:"
+            cat ecosystem.config.js
+            
             # Iniciar con configuración de ecosystem
+            echo "🚀 Iniciando PM2..."
             pm2 start ecosystem.config.js
+            
+            # Verificar estado inmediatamente
+            echo "📊 Estado inmediato de PM2:"
+            pm2 list
+            
+            # Esperar un momento y verificar de nuevo
+            sleep 5
+            echo "📊 Estado después de 5 segundos:"
+            pm2 list
+            
+            # Verificar logs si hay error
+            if pm2 list | grep -q "errored"; then
+              echo "❌ Error detectado en PM2. Mostrando logs:"
+              pm2 logs tesis --lines 50
+              echo "📄 Logs de error:"
+              cat logs/err.log 2>/dev/null || echo "No hay archivo de error"
+              echo "📄 Logs de salida:"
+              cat logs/out.log 2>/dev/null || echo "No hay archivo de salida"
+            else
+              echo "✅ PM2 iniciado correctamente"
+              pm2 logs tesis --lines 10
+            fi
             
             # Guardar configuración de PM2
             pm2 save
-
-            # Verificar estado de PM2
-            echo "📊 Estado de PM2:"
-            pm2 list
-            pm2 logs tesis --lines 10
 
             # Limpiar caché de nginx si es necesario
             echo "🔄 Reiniciando nginx..."
