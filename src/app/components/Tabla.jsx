@@ -21,7 +21,25 @@ export default function Tabla({ apiURL, campo }) {
     return () => clearInterval(intervalo);
   }, []);
 
-  const label = campo === "temperatura" ? "Temperatura (°C)" : "Humedad (%)";
+  let label = 0;
+
+  switch (campo) {
+    case "temperatura":
+      label = "Temperatura (ºC)";
+      break;
+    case "humedad":
+      label = "Humedad (%)";
+      break;
+    case "temperaturaCorporal":
+      label = "Temperatura (ºC)";
+      break;
+    case "frecuenciaCardiaca":
+      label = "Frecuencia cardiaca (bpm)";
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <div className="pb-4">
@@ -38,7 +56,9 @@ export default function Tabla({ apiURL, campo }) {
               key={d.id}
               className="text-dark bg-white border-b dark:border-gray-700 text-center"
             >
-              <td className="min-w-[150px]">{new Date(d.fecha).toLocaleString()}</td>
+              <td className="min-w-[150px]">
+                {new Date(d.fecha).toLocaleString()}
+              </td>
               <td className="px-6">{d[campo]}</td>
             </tr>
           ))}
