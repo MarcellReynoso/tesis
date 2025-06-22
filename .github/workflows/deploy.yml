@@ -26,9 +26,17 @@ jobs:
             git status
             git log --oneline -5
 
+            # Guardar cambios locales (como .env) antes del pull
+            echo "💾 Guardando cambios locales..."
+            git stash push -m "Cambios locales antes del pull - $(date)"
+
             # Pull desde GitHub
             echo "⬇️ Descargando cambios desde GitHub..."
             git pull origin feature/config-next-to-deploy
+
+            # Restaurar cambios locales (como .env)
+            echo "🔄 Restaurando cambios locales..."
+            git stash pop || echo "No hay cambios locales para restaurar"
 
             # Verificar cambios descargados
             echo "📋 Cambios descargados:"
