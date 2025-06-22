@@ -78,8 +78,6 @@ jobs:
             
             # Verificar que estamos en el directorio correcto
             echo "📁 Directorio actual: $(pwd)"
-            echo "📁 Contenido del directorio:"
-            ls -la
             
             # Verificar que ecosystem.config.js existe
             if [ ! -f "ecosystem.config.js" ]; then
@@ -87,35 +85,13 @@ jobs:
               exit 1
             fi
             
-            # Mostrar configuración de PM2
-            echo "📋 Configuración de PM2:"
-            cat ecosystem.config.js
-            
             # Iniciar con configuración de ecosystem
             echo "🚀 Iniciando PM2..."
             pm2 start ecosystem.config.js
             
-            # Verificar estado inmediatamente
-            echo "📊 Estado inmediato de PM2:"
+            # Verificar estado
+            echo "📊 Estado de PM2:"
             pm2 list
-            
-            # Esperar un momento y verificar de nuevo
-            sleep 5
-            echo "📊 Estado después de 5 segundos:"
-            pm2 list
-            
-            # Verificar logs si hay error
-            if pm2 list | grep -q "errored"; then
-              echo "❌ Error detectado en PM2. Mostrando logs:"
-              pm2 logs tesis --lines 50
-              echo "📄 Logs de error:"
-              cat logs/err.log 2>/dev/null || echo "No hay archivo de error"
-              echo "📄 Logs de salida:"
-              cat logs/out.log 2>/dev/null || echo "No hay archivo de salida"
-            else
-              echo "✅ PM2 iniciado correctamente"
-              pm2 logs tesis --lines 10
-            fi
             
             # Guardar configuración de PM2
             pm2 save
@@ -145,10 +121,6 @@ jobs:
             echo "📊 Estado final de PM2:"
             pm2 list
             
-            # Verificar logs
-            echo "📄 Logs recientes:"
-            pm2 logs tesis --lines 20
-            
             # Verificar conectividad
             echo "🌍 Verificando conectividad local:"
             curl -I http://localhost:3005/marcell 2>/dev/null | head -1 || echo "❌ No se puede conectar localmente"
@@ -156,10 +128,5 @@ jobs:
             # Verificar archivos de build
             echo "📁 Verificando archivos de build:"
             ls -la .next/
-            
-            # Verificar variables de entorno
-            echo "🔧 Verificando variables de entorno:"
-            echo "NODE_ENV: $NODE_ENV"
-            echo "PORT: $PORT"
             
             echo "✅ Verificación completada"
