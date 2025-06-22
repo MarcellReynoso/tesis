@@ -10,12 +10,23 @@ const nextConfig = {
   output: 'standalone',
   
   // Configuración para el puerto
-  experimental: {
-    serverComponentsExternalPackages: ['mysql2']
-  },
+  serverExternalPackages: ['mysql2'],
   
   // Configuración para evitar problemas de caché
   generateEtags: false,
+  
+  // Configuración para rewrites (maneja las rutas de API correctamente)
+  async rewrites() {
+    if (process.env.NODE_ENV === 'production') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: '/marcell/api/:path*',
+        },
+      ];
+    }
+    return [];
+  },
   
   // Configuración para headers
   async headers() {
