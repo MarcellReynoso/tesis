@@ -21,16 +21,104 @@ jobs:
             echo "📦 Actualizando proyecto..."
             cd ${{ secrets.MARCELL_PATH }}
 
+            # Verificar estado actual
+            echo "📋 Estado actual del repositorio:"
+            git status
+            git log --oneline -5
+
             # Pull desde GitHub
+            echo "⬇️ Descargando cambios desde GitHub..."
             git pull origin master
 
+            # Verificar cambios descargados
+            echo "📋 Cambios descargados:"
+            git log --oneline -3
+
+            # Limpiar caché de npm
+            echo "🧹 Limpiando caché..."
+            npm cache clean --force
+
+            # Eliminar node_modules y package-lock.json para instalación limpia
+            echo "🗑️ Eliminando dependencias anteriores..."
+            rm -rf node_modules package-lock.json
+
             # Instalar dependencias
+            echo "📦 Instalando dependencias..."
             npm install
 
+            # Limpiar build anterior
+            echo "🧹 Limpiando build anterior..."
+            rm -rf .next
+
             # Construir proyecto en modo producción
+            echo "🔨 Construyendo proyecto..."
             NODE_ENV=production npm run build
 
-            echo "🔄 Reiniciando aplicación..."
-            pm2 restart tesis || echo "PM2 no está corriendo o no se encontró el proceso"
+            # Verificar que el build se completó correctamente
+            if [ ! -d ".next" ]; then
+              echo "❌ Error: El build no se completó correctamente"
+              exit 1
+            fi
+
+            # Crear directorio de logs si no existe
+            mkdir -p logs
+
+            echo "🔄 Reiniciando aplicación con PM2..."
+            
+            # Detener proceso existente si existe
+            pm2 delete tesis 2>/dev/null || echo "No había proceso previo"
+            
+            # Iniciar con configuración de ecosystem
+            pm2 start ecosystem.config.js
+            
+            # Guardar configuración de PM2
+            pm2 save
+
+            # Verificar estado de PM2
+            echo "📊 Estado de PM2:"
+            pm2 list
+            pm2 logs tesis --lines 10
+
+            # Limpiar caché de nginx si es necesario
+            echo "🔄 Reiniciando nginx..."
+            sudo systemctl reload nginx
 
             echo "✅ Despliegue completado"
+            echo "🌐 La aplicación debería estar disponible en: https://tutupaca.unjbg.edu.pe/marcell"
+
+      - name: 🔍 Verificar despliegue
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "🔍 Ejecutando verificación post-despliegue..."
+            cd ${{ secrets.MARCELL_PATH }}
+            
+            # Esperar un momento para que la aplicación se inicie completamente
+            sleep 15
+            
+            # Verificar estado del proceso
+            echo "📊 Estado final de PM2:"
+            pm2 list
+            
+            # Verificar logs
+            echo "📄 Logs recientes:"
+            pm2 logs tesis --lines 20
+            
+            # Verificar conectividad
+            echo "🌍 Verificando conectividad local:"
+            curl -I http://localhost:3005/marcell 2>/dev/null | head -1 || echo "❌ No se puede conectar localmente"
+            
+            # Verificar archivos de build
+            echo "📁 Verificando archivos de build:"
+            ls -la .next/
+            
+            # Verificar variables de entorno
+            echo "🔧 Verificando variables de entorno:"
+            echo "NODE_ENV: $NODE_ENV"
+            echo "PORT: $PORT"
+            
+            echo "✅ Verificación completada"

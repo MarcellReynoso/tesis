@@ -1,26 +1,36 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Para producción con subpath
-    basePath: process.env.NODE_ENV === 'production' ? '/tesis' : '',
-    assetPrefix: process.env.NODE_ENV === 'production' ? '/tesis' : '',
-    
-    // Para manejar trailing slashes
-    trailingSlash: true,
-    
-    // Configuración de imágenes
-    images: {
-      unoptimized: true, // Si tienes problemas con optimización de imágenes
-    },
-    
-    // Para APIs
-    async rewrites() {
-      return process.env.NODE_ENV === 'production' ? [
-        {
-          source: '/tesis/api/:path*',
-          destination: '/api/:path*',
-        },
-      ] : [];
-    },
-  }
+  // Configuración para el despliegue en /marcell
+  basePath: process.env.NODE_ENV === 'production' ? '/marcell' : '',
   
-  export default nextConfig;
+  // Configuración para imágenes y assets
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/marcell' : '',
+  
+  // Configuración para el servidor
+  output: 'standalone',
+  
+  // Configuración para el puerto
+  experimental: {
+    serverComponentsExternalPackages: ['mysql2']
+  },
+  
+  // Configuración para evitar problemas de caché
+  generateEtags: false,
+  
+  // Configuración para headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
