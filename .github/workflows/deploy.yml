@@ -28,7 +28,7 @@ jobs:
 
             # Pull desde GitHub
             echo "⬇️ Descargando cambios desde GitHub..."
-            git pull origin master
+            git pull origin feature/config-next-to-deploy
 
             # Verificar cambios descargados
             echo "📋 Cambios descargados:"
