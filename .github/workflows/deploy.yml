@@ -32,7 +32,7 @@ jobs:
 
             # Pull desde GitHub
             echo "⬇️ Descargando cambios desde GitHub..."
-            git pull origin feature/config-next-to-deploy
+            git pull origin master
 
             # Restaurar cambios locales (como .env)
             echo "🔄 Restaurando cambios locales..."
