@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { getApiPath } from "@/lib/utils";
 
-export default function Tabla({ apiURL, campo }) {
+export default function Tabla({ apiURL, campo, cantidadData, width }) {
   const [datos, setDatos] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await fetch(getApiPath(apiURL));
       const data = await response.json();
-      setDatos(data.slice(0, 10));
+      setDatos(data.slice(0,cantidadData));
     } catch (error) {
       console.error("Error cargando datos:", error);
     }
@@ -17,7 +17,7 @@ export default function Tabla({ apiURL, campo }) {
 
   useEffect(() => {
     fetchData();
-    const intervalo = setInterval(fetchData, 30000);
+    const intervalo = setInterval(fetchData, 10000);
     return () => clearInterval(intervalo);
   }, []);
 
@@ -31,10 +31,10 @@ export default function Tabla({ apiURL, campo }) {
       label = "Humedad (%)";
       break;
     case "temperaturaCorporal":
-      label = "Temperatura (ºC)";
+      label = "Temperatura";
       break;
     case "frecuenciaCardiaca":
-      label = "Frecuencia cardiaca (bpm)";
+      label = "Latidos (bpm)";
       break;
 
     default:
@@ -42,9 +42,9 @@ export default function Tabla({ apiURL, campo }) {
   }
 
   return (
-    <div className="pb-4">
-      <table className="w-full text-xs lg:text-base">
-        <thead className="tarjeta text-white">
+    <div className={`pb-4 lg:pb-0 lg:w-[${width}px]`}>
+      <table className="w-full text-base">
+        <thead className="tarjeta text-white text-xs">
           <tr>
             <th className="px-6 py-4">Fecha</th>
             <th className="px-6">{label}</th>

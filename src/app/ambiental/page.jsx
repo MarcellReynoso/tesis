@@ -43,36 +43,35 @@ export default function Page() {
       <h1 className="text-[#033e42] roboto text-2xl md:text-4xl font-bold py-2 md:text-left text-center">
         VARIABLES AMBIENTALES
       </h1>
-      <TabGroup className={"bg-red"}>
-        <TabList
-          className={
-            "flex justify-center md:justify-start gap-10 mx-auto pr-4 md:pr-0 py-3 "
-          }
-        >
-          <Tab
+      <TabGroup className={""}>
+        <div className="bg-gray-500 w-min rounded-full mx-auto lg:mx-0">
+          <TabList
             className={
-              "rounded-full px-3 py-2 text-xl md:text-lg text-[#033e42] roboto focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
+              "flex items-center lg:w-full justify-center gap-5 md:gap-0 md:pr-0 my-3"
             }
           >
-            Temperatura
-          </Tab>
-          <Tab
-            className={
-              "rounded-full px-3 py-2 text-xl md:text-lg text-[#033e42] roboto font-semibold focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer"
-            }
-          >
-            Humedad
-          </Tab>
-        </TabList>
+            <Tab
+              className={
+                "rounded-full px-3 py-2 text-xl md:text-lg text-white roboto focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold"
+              }
+            >
+              Temperatura
+            </Tab>
+            <Tab
+              className={
+                "rounded-full px-3 py-2 text-xl md:text-lg text-white roboto  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold"
+              }
+            >
+              Humedad
+            </Tab>
+          </TabList>
+        </div>
         <TabPanels>
           <TabPanel>
             {/* Temperatura */}
             <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
               Temperatura ambiental (ºC)
             </h2>
-            <h3 className="hidden md:block text-[#033e42] roboto text-xl md:text-2xl  py-2 text-center md:text-left text-center">
-              Dashboard
-            </h3>
 
             <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
               {/* Columna 1: Imagen */}
@@ -87,19 +86,20 @@ export default function Page() {
               </div>
 
               {/* Columna 2: Promedio global */}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center lg:w-auto w-[285px]">
                 {/* Este div define el ancho del Card */}
-                <div className="w-[200px] h-[120px]">
+                <div className="w-full lg:w-[200px] h-[120px]">
                   <Card
-                    titulo="Promedio global"
+                    titulo="Promedio"
                     valor={temperaturaPromedio}
                     color="bg-[#51722c]"
+                    subtitulo={"Temperatura (ºC)"}
                   />
                 </div>
               </div>
 
               <div>
-                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center">
+                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center font-semibold">
                   Temperaturas actuales
                 </h3>
               </div>
@@ -112,11 +112,12 @@ export default function Page() {
                     className="flex flex-col lg:flex-row gap-4 items-center"
                   >
                     {/* ESTE div define el ancho del Card */}
-                    <div className="w-[200px] h-[120px]">
+                    <div className="w-full lg:w-[200px] h-[120px]">
                       <Card
                         titulo={`Kit ${kit.kitId}`}
                         valor={kit.temperaturaActual}
                         color="bg-[#082d30]"
+                        subtitulo={"Temperatura actual"}
                       />
                     </div>
 
@@ -126,27 +127,20 @@ export default function Page() {
                         apiUrl={`/api/ambiental/${kit.kitId}`}
                         campo="temperatura"
                         label="Tendencia de temperatura (ºC)"
+                        width={500}
+                        cantidadData={10}
+                      />
+                    </div>
+                    <div>
+                      <Tabla
+                        apiURL={`/api/ambiental/${kit.kitId}`}
+                        campo="temperatura"
+                        cantidadData={3}
                       />
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center md:text-left pt-5">
-              Información por Kit
-            </h3>
-            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center">
-              {kitsTemperatura.map((k) => (
-                <div key={k.kitId}>
-                  <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-3 text-left">
-                    Kit {k.kitId}
-                  </h4>
-                  <Tabla
-                    apiURL={`/api/ambiental/${k.kitId}`}
-                    campo="temperatura"
-                  />
-                </div>
-              ))}
             </div>
           </TabPanel>
           <TabPanel>
@@ -154,9 +148,6 @@ export default function Page() {
             <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
               Humedad relativa (%)
             </h2>
-            <h3 className="hidden md:block text-[#033e42] roboto text-xl md:text-2xl  py-2 text-center lg:text-left">
-              Dashboard
-            </h3>
 
             <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
               <div className="flex justify-center ">
@@ -168,11 +159,12 @@ export default function Page() {
               </div>
 
               <div className="flex items-center justify-center">
-                <div className="w-[200px] h-[120px]">
+                <div className="lg:w-auto w-[285px] h-[120px]">
                   <Card
-                    titulo="Promedio global"
+                    titulo="Promedio"
                     valor={humedadPromedio}
                     color="bg-[#2c5e72]"
+                    subtitulo={"Humedad relativa"}
                   />
                 </div>
               </div>
@@ -189,11 +181,12 @@ export default function Page() {
                     key={kit.kitId}
                     className="flex flex-col lg:flex-row gap-4 items-center"
                   >
-                    <div className="w-[200px] h-[120px]">
+                    <div className="w-full lg:w-[200px] h-[120px]">
                       <Card
                         titulo={`Kit ${kit.kitId}`}
                         valor={kit.humedadActual}
                         color="bg-[#043248]"
+                        subtitulo={"Humedad actual"}
                       />
                     </div>
                     <div className="hidden lg:block">
@@ -201,26 +194,21 @@ export default function Page() {
                         apiUrl={`/api/ambiental/${kit.kitId}`}
                         campo="humedad"
                         label="Tendencia de humedad (%)"
+                        width={500}
+                        cantidadData={10}
+                      />
+                    </div>
+                    <div>
+                      <Tabla
+                        apiURL={`/api/ambiental/${kit.kitId}`}
+                        campo="humedad"
+                        cantidadData={3}
+                        width={350}
                       />
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-
-            <h3 className="text-[#033e42] roboto text-xl md:text-2xl text-center md:text-left pt-5">
-              Información por Kit
-            </h3>
-
-            <div className="flex flex-col justify-between gap-10 lg:flex-row items-center">
-              {kitsHumedad.map((k) => (
-                <div key={k.kitId}>
-                  <h4 className="text-[#033e42] roboto text-xl md:text-2xl font-semibold py-3 text-left">
-                    Kit {k.kitId}
-                  </h4>
-                  <Tabla apiURL={`/api/ambiental/${k.kitId}`} campo="humedad" />
-                </div>
-              ))}
             </div>
           </TabPanel>
         </TabPanels>

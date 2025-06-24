@@ -8,14 +8,14 @@ import Link from "next/link";
 import OptimizedImage from "./OptimizedImage";
 
 // Determinar si estamos en producción para usar la carpeta base
-const isProduction = process.env.NODE_ENV === 'production';
-const basePath = isProduction ? '/marcell' : '';
+// const isProduction = process.env.NODE_ENV === 'production';
+// const basePath = isProduction ? '/marcell' : '';
 
 const navigation = [
-  { name: "Dashboard general", href: `${basePath}/datos` },
-  { name: "Ambiental", href: `${basePath}/ambiental` },
-  { name: "Corporal", href: `${basePath}/corporal`},
-  { name: "Sensores", href: `${basePath}/sensores` },
+  { name: "Dashboard general", href: `/datos` },
+  { name: "Ambiental", href: `/ambiental` },
+  { name: "Corporal", href: `/corporal`},
+  { name: "Sensores", href: `/sensores` },
 ];
 
 export default function BarraNavegacion() {
@@ -40,7 +40,7 @@ export default function BarraNavegacion() {
           <div className="hidden md:flex flex-1 items-center justify-between">
             {/* Logo */}
             <div className="">
-              <Link href={`${basePath}/`}>
+              <Link href={`/`}>
                 <OptimizedImage 
                   alt="Logo" 
                   src="/img/logoUNJBGBlanco.png"

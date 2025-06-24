@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { getApiPath } from "@/lib/utils";
 
-export default function LineChart({ apiUrl, campo, label }) {
+export default function LineChart({ apiUrl, campo, label, width, cantidadData }) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [datos, setDatos] = useState([]);
@@ -12,7 +12,7 @@ export default function LineChart({ apiUrl, campo, label }) {
     const response = await fetch(getApiPath(apiUrl));
     const data = await response.json();
     // console.log(data);
-    const ultimos = data.slice(0, 10).reverse();
+    const ultimos = data.slice(0, cantidadData).reverse();
     console.log(ultimos);
     setDatos(ultimos);
   }
@@ -78,7 +78,7 @@ export default function LineChart({ apiUrl, campo, label }) {
 
   return (
     <div className="">
-      <canvas width="700" height="120" ref={chartRef} />
+      <canvas width={width} height="120" ref={chartRef} />
     </div>
   );
 }
