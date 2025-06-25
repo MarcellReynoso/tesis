@@ -71,14 +71,13 @@ export default function BarraNavegacion() {
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-4 px-4 pt-4 pb-6">
           {navigation.map((item) => (
-            <DisclosureButton
+            <Link
               key={item.name}
-              as="a"
               href={item.href}
               className="flex w-full items-center justify-start rounded-md text-base font-medium"
             >
               {item.name}
-            </DisclosureButton>
+            </Link>
           ))}
         </div>
       </DisclosurePanel>
