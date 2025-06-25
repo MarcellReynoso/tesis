@@ -12,7 +12,7 @@ import OptimizedImage from "./OptimizedImage";
 // const basePath = isProduction ? '/marcell' : '';
 
 const navigation = [
-  { name: "Dashboard general", href: `/datos` },
+  // { name: "Dashboard general", href: `/datos` },
   { name: "Ambiental", href: `/ambiental` },
   { name: "Corporal", href: `/corporal`},
   { name: "Sensores", href: `/sensores` },

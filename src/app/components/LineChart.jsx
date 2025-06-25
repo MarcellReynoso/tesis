@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { getApiPath } from "@/lib/utils";
 
-export default function LineChart({ apiUrl, campo, label, width, cantidadData }) {
+export default function LineChart({ apiUrl, campo, label, width, height, cantidadData }) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [datos, setDatos] = useState([]);
@@ -78,7 +78,7 @@ export default function LineChart({ apiUrl, campo, label, width, cantidadData })
 
   return (
     <div className="">
-      <canvas width={width} height="120" ref={chartRef} />
+      <canvas width={width} height={height} ref={chartRef} />
     </div>
   );
 }

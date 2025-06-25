@@ -158,7 +158,7 @@ export default function Page() {
                     apiUrl={`/api/corporal/${alumno.id + 3}`}
                     campo="frecuenciaCardiaca"
                     label="Latidos (bpm)"
-                    cantidadData={5}
+                    cantidadData={15}
                     width={290}
                   />
                   <div className="flex">

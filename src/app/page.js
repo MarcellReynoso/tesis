@@ -1,9 +1,5 @@
-import React from 'react'
+import { redirect } from "next/navigation";
 
-function page() {
-  return (
-    <div>{"Hello I'm alive"}</div>
-  )
+export default function Home() {
+  redirect("/ambiental");
 }
-
-export default page

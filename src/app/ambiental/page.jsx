@@ -39,8 +39,8 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="px-6">
-      <h1 className="text-[#033e42] roboto text-2xl md:text-4xl font-bold py-2 md:text-left text-center">
+    <div>
+      <h1 className="text-[#033e42] roboto h1 text-3xl md:text-4xl font-bold py-5 text-center lg:text-left">
         VARIABLES AMBIENTALES
       </h1>
       <TabGroup className={""}>
@@ -128,6 +128,7 @@ export default function Page() {
                         campo="temperatura"
                         label="Tendencia de temperatura (ºC)"
                         width={500}
+                        height={130}
                         cantidadData={10}
                       />
                     </div>

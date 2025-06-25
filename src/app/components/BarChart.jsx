@@ -1,10 +1,24 @@
 "use client";
-import { useRef, useEffect } from 'react';
-import { Chart } from 'chart.js/auto';
+import { useRef, useEffect, useState } from "react";
+import { Chart } from "chart.js/auto";
+import { getApiPath } from "@/lib/utils";
 
-export default function BarChart() {
+export default function BarChart({ apiUrl, width, color }) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
+  const [datos, setDatos] = useState([]);
+
+  async function fetchData() {
+    const response = await fetch(getApiPath(apiUrl));
+    const data = await response.json();
+    setDatos(data);
+  }
+
+  useEffect(() => {
+    fetchData();
+    const intervalo = setInterval(fetchData, 10000);
+    return () => clearInterval(intervalo);
+  }, [apiUrl]);
 
   useEffect(() => {
     if (chartRef.current) {
@@ -15,21 +29,28 @@ export default function BarChart() {
         chartInstanceRef.current.destroy();
       }
 
+      const etiquetas = datos.map((d) => `Kit ${d.kitId}`);
+      const valores = datos.map((d) => d.promedio);
+
+
       // Crear nuevo gráfico
       const newChart = new Chart(context, {
         type: "bar",
         data: {
-          labels: ["John", "Jane", "Doe"],
-          datasets: [{
-            label: "Info",
-            data: [34, 64, 23],
-            backgroundColor: "orange",
-            borderColor: "red",
-            borderWidth: 1,
-          }],
+          labels: etiquetas,
+          datasets: [
+            {
+              data: valores,
+              backgroundColor: color,
+            },
+          ],
         },
         options: {
-          responsive: true,
+          responsive: false,
+          animation: false,
+          plugins: {
+            legend: {display: false},
+          },
           scales: {
             x: {
               type: "category",
@@ -51,11 +72,11 @@ export default function BarChart() {
         chartInstanceRef.current.destroy();
       }
     };
-  }, []);
+  }, [datos]);
 
   return (
-    <div style={{ position: "relative", width: "90vw", height: "80vh" }}>
-      <canvas ref={chartRef} />
+    <div>
+      <canvas width={width} ref={chartRef} />
     </div>
   );
 }
