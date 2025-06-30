@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { getApiPath } from "@/lib/utils";
 
-export default function LineChart({ apiUrl, campo, label, width, height, cantidadData }) {
+export default function LineChart({ apiUrl, campo, label, width, height, cantidadData, tension }) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [datos, setDatos] = useState([]);
@@ -47,7 +47,7 @@ export default function LineChart({ apiUrl, campo, label, width, height, cantida
             fill: false,
             borderColor: "#51722c",
             backgroundColor: "#84d7dd",
-            tension: 0.5,
+            tension,
             showLine: true,
             pointStyle: false,
           },
@@ -66,8 +66,8 @@ export default function LineChart({ apiUrl, campo, label, width, height, cantida
             title: { display: false },
           },
           x: {
-            display: false,
-            title: { display: false},
+            display: true,
+            title: { display: true},
           },
         },
       },

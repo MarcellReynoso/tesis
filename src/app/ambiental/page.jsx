@@ -73,6 +73,39 @@ export default function Page() {
               Temperatura ambiental (ºC)
             </h2>
 
+            <div className="flex w-full justify-between">
+              <div className="flex flex-col w-1/3 jusfity-center items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 1
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/1`}
+                  campo="temperatura"
+                  cantidadData={15}
+                />
+              </div>
+              <div className="flex flex-col w-1/3 items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 2
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/2`}
+                  campo="temperatura"
+                  cantidadData={15}
+                />
+              </div>
+              <div className="flex flex-col w-1/3 jusfity-center items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 3
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/3`}
+                  campo="temperatura"
+                  cantidadData={15}
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
               {/* Columna 1: Imagen */}
               <div className="flex justify-center px-4">
@@ -127,16 +160,10 @@ export default function Page() {
                         apiUrl={`/api/ambiental/${kit.kitId}`}
                         campo="temperatura"
                         label="Tendencia de temperatura (ºC)"
-                        width={500}
-                        height={130}
+                        width={800}
+                        height={180}
                         cantidadData={10}
-                      />
-                    </div>
-                    <div>
-                      <Tabla
-                        apiURL={`/api/ambiental/${kit.kitId}`}
-                        campo="temperatura"
-                        cantidadData={3}
+                        tension={0.3}
                       />
                     </div>
                   </div>
@@ -150,8 +177,42 @@ export default function Page() {
               Humedad relativa (%)
             </h2>
 
+            <div className="flex w-full justify-between">
+              <div className="flex flex-col w-1/3 items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 1
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/1`}
+                  campo="humedad"
+                  cantidadData={15}
+                />
+              </div>
+              <div className="flex flex-col w-1/3 items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 2
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/2`}
+                  campo="humedad"
+                  cantidadData={15}
+                />
+              </div>
+              <div className="flex flex-col w-1/3 items-center">
+                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
+                  Kit 3
+                </h3>
+                <Tabla
+                  apiURL={`/api/ambiental/3`}
+                  campo="humedad"
+                  cantidadData={15}
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
-              <div className="flex justify-center ">
+              {/* Imagen humedad */}
+              <div className="flex justify-center px-4">
                 <OptimizedImage
                   src="/img/humedad.png"
                   alt="Humedad"
@@ -159,8 +220,9 @@ export default function Page() {
                 />
               </div>
 
-              <div className="flex items-center justify-center">
-                <div className="lg:w-auto w-[285px] h-[120px]">
+              {/* Promedio humedad */}
+              <div className="flex items-center justify-center lg:w-auto w-[285px]">
+                <div className="w-full lg:w-[200px] h-[120px]">
                   <Card
                     titulo="Promedio"
                     valor={humedadPromedio}
@@ -171,11 +233,12 @@ export default function Page() {
               </div>
 
               <div>
-                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center">
+                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center font-semibold">
                   Humedades actuales
                 </h3>
               </div>
 
+              {/* KPIs y gráfico humedad */}
               <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
                 {kitsHumedad.map((kit) => (
                   <div
@@ -190,21 +253,16 @@ export default function Page() {
                         subtitulo={"Humedad actual"}
                       />
                     </div>
+
                     <div className="hidden lg:block">
                       <LineChart
                         apiUrl={`/api/ambiental/${kit.kitId}`}
                         campo="humedad"
                         label="Tendencia de humedad (%)"
-                        width={500}
+                        width={800}
+                        height={180}
                         cantidadData={10}
-                      />
-                    </div>
-                    <div>
-                      <Tabla
-                        apiURL={`/api/ambiental/${kit.kitId}`}
-                        campo="humedad"
-                        cantidadData={3}
-                        width={350}
+                        tension={0.3}
                       />
                     </div>
                   </div>

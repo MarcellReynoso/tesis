@@ -88,34 +88,34 @@ export default function Page() {
                     <OptimizedImage
                       src="/img/persona.png"
                       alt="Imagen de persona"
-                      width={100}
+                      width={50}
                     />
                   </div>
                   <div className="lg:w-full w-2/3">
-                    <Card
-                      color="bg-[#2c5e72]"
-                      valor={obtenerValor(
-                        alumno.kitId,
-                        temperaturas,
-                        "temperaturaCorporal"
-                      )}
-                      titulo={`Kit ${alumno.kitId}`}
-                      subtitulo="Temperatura actual (ºC)"
-                    />
-                  </div>
-                  <LineChart
-                    apiUrl={`/api/corporal/${alumno.id + 3}`}
-                    campo="temperaturaCorporal"
-                    label="Temperatura"
-                    cantidadData={5}
-                    width={290}
-                  />
-                  <div className="flex">
-                    <Tabla
-                      apiURL={`/api/corporal/${alumno.kitId}`}
-                      campo="temperaturaCorporal"
-                      cantidadData={5}
-                    />
+                    <div className="flex flex-col gap-4">
+                      <Tabla
+                        apiURL={`/api/corporal/${alumno.kitId}`}
+                        campo="temperaturaCorporal"
+                        cantidadData={15}
+                      />
+                      <LineChart
+                        apiUrl={`/api/corporal/${alumno.id + 3}`}
+                        campo="temperaturaCorporal"
+                        label="Temperatura"
+                        cantidadData={5}
+                        width={290}
+                      />
+                      <Card
+                        color="bg-[#2c5e72]"
+                        valor={obtenerValor(
+                          alumno.kitId,
+                          temperaturas,
+                          "temperaturaCorporal"
+                        )}
+                        titulo={`Kit ${alumno.kitId}`}
+                        subtitulo="Temperatura actual (ºC)"
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -135,38 +135,45 @@ export default function Page() {
                   <h4 className="roboto font-semibold text-[#336164]">
                     Alumno Nº{alumno.id}
                   </h4>
+
                   <div className="flex mb-5">
                     <OptimizedImage
                       src="/img/persona.png"
                       alt="Imagen de persona"
-                      width={100}
+                      width={50}
                     />
                   </div>
+
                   <div className="lg:w-full w-2/3">
-                    <Card
-                      color="bg-[#51722c]"
-                      valor={obtenerValor(
-                        alumno.kitId,
-                        frecuencias,
-                        "frecuenciaCardiaca"
-                      )}
-                      titulo={`Kit ${alumno.kitId}`}
-                      subtitulo={`Frecuencia cardiaca actual`}
-                    />
-                  </div>
-                  <LineChart
-                    apiUrl={`/api/corporal/${alumno.id + 3}`}
-                    campo="frecuenciaCardiaca"
-                    label="Latidos (bpm)"
-                    cantidadData={15}
-                    width={290}
-                  />
-                  <div className="flex">
-                    <Tabla
-                      apiURL={`/api/corporal/${alumno.kitId}`}
-                      campo="frecuenciaCardiaca"
-                      cantidadData={5}
-                    />
+                    <div className="flex flex-col gap-4">
+                      {/* Tabla */}
+                      <Tabla
+                        apiURL={`/api/corporal/${alumno.kitId}`}
+                        campo="frecuenciaCardiaca"
+                        cantidadData={15}
+                      />
+
+                      {/* Gráfico */}
+                      <LineChart
+                        apiUrl={`/api/corporal/${alumno.id + 3}`}
+                        campo="frecuenciaCardiaca"
+                        label="Latidos (bpm)"
+                        cantidadData={5}
+                        width={290}
+                      />
+
+                      {/* KPI */}
+                      <Card
+                        color="bg-[#51722c]"
+                        valor={obtenerValor(
+                          alumno.kitId,
+                          frecuencias,
+                          "frecuenciaCardiaca"
+                        )}
+                        titulo={`Kit ${alumno.kitId}`}
+                        subtitulo={`Frecuencia cardiaca actual`}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

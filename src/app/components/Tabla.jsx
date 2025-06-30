@@ -9,7 +9,7 @@ export default function Tabla({ apiURL, campo, cantidadData, width }) {
     try {
       const response = await fetch(getApiPath(apiURL));
       const data = await response.json();
-      setDatos(data.slice(0,cantidadData));
+      setDatos(data.slice(0, cantidadData));
     } catch (error) {
       console.error("Error cargando datos:", error);
     }
@@ -31,7 +31,7 @@ export default function Tabla({ apiURL, campo, cantidadData, width }) {
       label = "Humedad (%)";
       break;
     case "temperaturaCorporal":
-      label = "Temperatura";
+      label = "T (ºC)";
       break;
     case "frecuenciaCardiaca":
       label = "Latidos (bpm)";
@@ -43,20 +43,20 @@ export default function Tabla({ apiURL, campo, cantidadData, width }) {
 
   return (
     <div className={`pb-4 lg:pb-0 lg:w-[${width}px]`}>
-      <table className="w-full text-base">
+      <table className="w-full text-base border border-gray-300 rounded-xl overflow-hidden shadow-sm">
         <thead className="tarjeta text-white text-xs">
           <tr>
-            <th className="px-6 py-4">Fecha</th>
-            <th className="px-6">{label}</th>
+            <th className="px-6 py-4 border-b border-gray-300">Fecha</th>
+            <th className="px-6 py-4 border-b border-gray-300">{label}</th>
           </tr>
         </thead>
         <tbody>
           {datos.map((d) => (
             <tr
               key={d.id}
-              className="text-dark bg-white border-b dark:border-gray-700 text-center"
+              className="text-dark text-base bg-white border-b border-gray-200 text-center hover:bg-gray-100 transition"
             >
-              <td className="min-w-[150px]">
+              <td className="min-w-[200px] px-6">
                 {new Date(d.fecha).toLocaleString()}
               </td>
               <td className="px-6">{d[campo]}</td>
