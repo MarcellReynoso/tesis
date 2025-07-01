@@ -79,10 +79,10 @@ export default function Page() {
               {alumnos.map((alumno) => (
                 <div
                   key={alumno.id}
-                  className="flex flex-col justify-center items-center w-full gap-5"
+                  className="flex flex-col justify-center items-center w-full"
                 >
                   <h4 className="roboto font-semibold text-[#336164]">
-                    Alumno Nº{alumno.id}
+                    Kit Nº{alumno.kitId}
                   </h4>
                   <div className="flex mb-5">
                     <OptimizedImage
@@ -93,16 +93,11 @@ export default function Page() {
                   </div>
                   <div className="lg:w-full w-2/3">
                     <div className="flex flex-col gap-4">
-                      <Tabla
-                        apiURL={`/api/corporal/${alumno.kitId}`}
-                        campo="temperaturaCorporal"
-                        cantidadData={15}
-                      />
                       <LineChart
                         apiUrl={`/api/corporal/${alumno.id + 3}`}
                         campo="temperaturaCorporal"
                         label="Temperatura"
-                        cantidadData={5}
+                        cantidadData={15}
                         width={290}
                       />
                       <Card
@@ -114,6 +109,11 @@ export default function Page() {
                         )}
                         titulo={`Kit ${alumno.kitId}`}
                         subtitulo="Temperatura actual (ºC)"
+                      />
+                      <Tabla
+                        apiURL={`/api/corporal/${alumno.kitId}`}
+                        campo="temperaturaCorporal"
+                        cantidadData={15}
                       />
                     </div>
                   </div>
@@ -130,10 +130,10 @@ export default function Page() {
               {alumnos.map((alumno) => (
                 <div
                   key={alumno.id}
-                  className="flex flex-col justify-center items-center w-full gap-5"
+                  className="flex flex-col justify-center items-center w-full"
                 >
                   <h4 className="roboto font-semibold text-[#336164]">
-                    Alumno Nº{alumno.id}
+                    Kit Nº{alumno.kitId}
                   </h4>
 
                   <div className="flex mb-5">
@@ -146,23 +146,13 @@ export default function Page() {
 
                   <div className="lg:w-full w-2/3">
                     <div className="flex flex-col gap-4">
-                      {/* Tabla */}
-                      <Tabla
-                        apiURL={`/api/corporal/${alumno.kitId}`}
-                        campo="frecuenciaCardiaca"
-                        cantidadData={15}
-                      />
-
-                      {/* Gráfico */}
                       <LineChart
                         apiUrl={`/api/corporal/${alumno.id + 3}`}
                         campo="frecuenciaCardiaca"
                         label="Latidos (bpm)"
-                        cantidadData={5}
+                        cantidadData={15}
                         width={290}
                       />
-
-                      {/* KPI */}
                       <Card
                         color="bg-[#51722c]"
                         valor={obtenerValor(
@@ -172,6 +162,11 @@ export default function Page() {
                         )}
                         titulo={`Kit ${alumno.kitId}`}
                         subtitulo={`Frecuencia cardiaca actual`}
+                      />
+                      <Tabla
+                        apiURL={`/api/corporal/${alumno.kitId}`}
+                        campo="frecuenciaCardiaca"
+                        cantidadData={15}
                       />
                     </div>
                   </div>

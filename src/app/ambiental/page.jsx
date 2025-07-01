@@ -17,9 +17,7 @@ export default function Page() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const temperaturaRes = await fetch(
-          getApiPath("/api/ambiental/temperatura")
-        );
+        const temperaturaRes = await fetch(getApiPath("/api/ambiental/temperatura"));
         const temperaturaData = await temperaturaRes.json();
         setTemperaturaPromedio(temperaturaData.temperaturaPromedio);
         setKitsTemperatura(temperaturaData.temperaturaActualPorKit);
@@ -43,228 +41,155 @@ export default function Page() {
       <h1 className="text-[#033e42] roboto h1 text-3xl md:text-4xl font-bold py-5 text-center lg:text-left">
         VARIABLES AMBIENTALES
       </h1>
-      <TabGroup className={""}>
+      <TabGroup>
         <div className="bg-gray-500 w-min rounded-full mx-auto lg:mx-0">
-          <TabList
-            className={
-              "flex items-center lg:w-full justify-center gap-5 md:gap-0 md:pr-0 my-3"
-            }
-          >
-            <Tab
-              className={
-                "rounded-full px-3 py-2 text-xl md:text-lg text-white roboto focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold"
-              }
-            >
+          <TabList className="flex items-center lg:w-full justify-center gap-5 my-3">
+            <Tab className="rounded-full px-3 py-2 text-xl md:text-lg text-white roboto focus:outline-none data-[selected]:bg-[#033e42] data-[selected]:text-white data-[selected]:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold">
               Temperatura
             </Tab>
-            <Tab
-              className={
-                "rounded-full px-3 py-2 text-xl md:text-lg text-white roboto  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-selected:bg-[#033e42] data-selected:text-white data-selected:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold"
-              }
-            >
+            <Tab className="rounded-full px-3 py-2 text-xl md:text-lg text-white roboto focus:outline-none data-[selected]:bg-[#033e42] data-[selected]:text-white data-[selected]:font-semibold hover:bg-[#336164] hover:text-white hover:cursor-pointer hover:font-semibold">
               Humedad
             </Tab>
           </TabList>
         </div>
+
         <TabPanels>
+          {/* TEMPERATURA */}
           <TabPanel>
-            {/* Temperatura */}
-            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
+            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 text-center lg:text-left">
               Temperatura ambiental (ºC)
             </h2>
 
-            <div className="flex w-full justify-between">
-              <div className="flex flex-col w-1/3 jusfity-center items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 1
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/1`}
-                  campo="temperatura"
-                  cantidadData={15}
-                />
-              </div>
-              <div className="flex flex-col w-1/3 items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 2
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/2`}
-                  campo="temperatura"
-                  cantidadData={15}
-                />
-              </div>
-              <div className="flex flex-col w-1/3 jusfity-center items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 3
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/3`}
-                  campo="temperatura"
-                  cantidadData={15}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
-              {/* Columna 1: Imagen */}
-              <div className="flex justify-center px-4">
+            <div className="flex flex-col lg:flex-row flex-wrap justify-center lg:justify-between gap-4 py-4">
+              <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7">
                 <OptimizedImage
                   src="/img/temperatura.png"
                   alt="Temperatura"
-                  width={100}
-                  height={100}
-                  className="w-[100px]"
+                  className="w-[60px] mx-auto lg:mx-0"
                 />
               </div>
-
-              {/* Columna 2: Promedio global */}
-              <div className="flex items-center justify-center lg:w-auto w-[285px]">
-                {/* Este div define el ancho del Card */}
-                <div className="w-full lg:w-[200px] h-[120px]">
+              <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7 px-15 lg:px-0">
+                <Card
+                  titulo="Promedio"
+                  valor={temperaturaPromedio}
+                  color="bg-[#51722c]"
+                  subtitulo="Temperatura (ºC)"
+                />
+              </div>
+              {kitsTemperatura.map((kit) => (
+                <div key={kit.kitId} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7 px-15 lg:px-0">
                   <Card
-                    titulo="Promedio"
-                    valor={temperaturaPromedio}
-                    color="bg-[#51722c]"
-                    subtitulo={"Temperatura (ºC)"}
+                    titulo={`Kit ${kit.kitId}`}
+                    valor={kit.temperaturaActual}
+                    color="bg-[#082d30]"
+                    subtitulo="Temperatura actual"
                   />
                 </div>
-              </div>
+              ))}
+            </div>
 
-              <div>
-                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center font-semibold">
-                  Temperaturas actuales
-                </h3>
-              </div>
-
-              {/* Columna 3: KPIs y Gráficos */}
-              <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-10">
+              <div className="flex flex-col lg:flex-row w-full lg:w-1/2 justify-between gap-4 px-15 lg:px-0">
                 {kitsTemperatura.map((kit) => (
-                  <div
-                    key={kit.kitId}
-                    className="flex flex-col lg:flex-row gap-4 items-center"
-                  >
-                    {/* ESTE div define el ancho del Card */}
-                    <div className="w-full lg:w-[200px] h-[120px]">
-                      <Card
-                        titulo={`Kit ${kit.kitId}`}
-                        valor={kit.temperaturaActual}
-                        color="bg-[#082d30]"
-                        subtitulo={"Temperatura actual"}
-                      />
-                    </div>
+                  <div key={kit.kitId} className="flex flex-col w-full lg:w-1/3">
+                    <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 text-center lg:text-left">
+                      Kit {kit.kitId}
+                    </h3>
+                    <Tabla
+                      apiURL={`/api/ambiental/${kit.kitId}`}
+                      campo="temperatura"
+                      cantidadData={15}
+                    />
+                  </div>
+                ))}
+              </div>
 
-                    {/* Gráfico ocupa el espacio restante */}
-                    <div className="hidden lg:block">
-                      <LineChart
-                        apiUrl={`/api/ambiental/${kit.kitId}`}
-                        campo="temperatura"
-                        label="Tendencia de temperatura (ºC)"
-                        width={800}
-                        height={180}
-                        cantidadData={10}
-                        tension={0.3}
-                      />
-                    </div>
+              <div className="hidden lg:flex lg:flex-col w-full lg:w-1/2 ">
+                {kitsTemperatura.map((kit) => (
+                  <div key={kit.kitId} className="flex flex-col">
+                    <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold text-center lg:text-left">
+                      Kit {kit.kitId}
+                    </h3>
+                    <LineChart
+                      apiUrl={`/api/ambiental/${kit.kitId}`}
+                      campo="temperatura"
+                      label="Tendencia de temperatura (ºC)"
+                      width={800}
+                      height={110}
+                      cantidadData={15}
+                      tension={0.3}
+                    />
                   </div>
                 ))}
               </div>
             </div>
           </TabPanel>
+
+          {/* HUMEDAD */}
           <TabPanel>
-            {/* Humedad */}
-            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 md:text-left text-center">
+            <h2 className="text-[#033e42] roboto text-xl md:text-3xl font-semibold py-2 text-center lg:text-left">
               Humedad relativa (%)
             </h2>
 
-            <div className="flex w-full justify-between">
-              <div className="flex flex-col w-1/3 items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 1
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/1`}
-                  campo="humedad"
-                  cantidadData={15}
-                />
-              </div>
-              <div className="flex flex-col w-1/3 items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 2
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/2`}
-                  campo="humedad"
-                  cantidadData={15}
-                />
-              </div>
-              <div className="flex flex-col w-1/3 items-center">
-                <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 md:text-left text-center">
-                  Kit 3
-                </h3>
-                <Tabla
-                  apiURL={`/api/ambiental/3`}
-                  campo="humedad"
-                  cantidadData={15}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-5 lg:gap-10 lg:flex-row items-center py-5">
-              {/* Imagen humedad */}
-              <div className="flex justify-center px-4">
+            <div className="flex flex-col lg:flex-row flex-wrap justify-center lg:justify-between gap-4 py-4">
+              <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7">
                 <OptimizedImage
                   src="/img/humedad.png"
                   alt="Humedad"
-                  className="w-[100px]"
+                  className="w-[110px] mx-auto lg:mx-0"
                 />
               </div>
-
-              {/* Promedio humedad */}
-              <div className="flex items-center justify-center lg:w-auto w-[285px]">
-                <div className="w-full lg:w-[200px] h-[120px]">
+              <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7 px-15 lg:px-0">
+                <Card
+                  titulo="Promedio"
+                  valor={humedadPromedio}
+                  color="bg-[#2c5e72]"
+                  subtitulo="Humedad (%)"
+                />
+              </div>
+              {kitsHumedad.map((kit) => (
+                <div key={kit.kitId} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/7 px-15 lg:px-0">
                   <Card
-                    titulo="Promedio"
-                    valor={humedadPromedio}
-                    color="bg-[#2c5e72]"
-                    subtitulo={"Humedad relativa"}
+                    titulo={`Kit ${kit.kitId}`}
+                    valor={kit.humedadActual}
+                    color="bg-[#043248]"
+                    subtitulo="Humedad actual"
                   />
                 </div>
-              </div>
+              ))}
+            </div>
 
-              <div>
-                <h3 className="md:hidden pt-5 flex w-full text-[#033e42] roboto text-xl text-center font-semibold">
-                  Humedades actuales
-                </h3>
-              </div>
-
-              {/* KPIs y gráfico humedad */}
-              <div className="flex flex-col gap-4 flex-1 lg:py-5 md:py-0">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-10">
+              <div className="flex flex-col lg:flex-row w-full lg:w-1/2 justify-between gap-4 px-15 lg:px-0">
                 {kitsHumedad.map((kit) => (
-                  <div
-                    key={kit.kitId}
-                    className="flex flex-col lg:flex-row gap-4 items-center"
-                  >
-                    <div className="w-full lg:w-[200px] h-[120px]">
-                      <Card
-                        titulo={`Kit ${kit.kitId}`}
-                        valor={kit.humedadActual}
-                        color="bg-[#043248]"
-                        subtitulo={"Humedad actual"}
-                      />
-                    </div>
+                  <div key={kit.kitId} className="flex flex-col w-full lg:w-1/3">
+                    <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold py-2 text-center lg:text-left">
+                      Kit {kit.kitId}
+                    </h3>
+                    <Tabla
+                      apiURL={`/api/ambiental/${kit.kitId}`}
+                      campo="humedad"
+                      cantidadData={15}
+                    />
+                  </div>
+                ))}
+              </div>
 
-                    <div className="hidden lg:block">
-                      <LineChart
-                        apiUrl={`/api/ambiental/${kit.kitId}`}
-                        campo="humedad"
-                        label="Tendencia de humedad (%)"
-                        width={800}
-                        height={180}
-                        cantidadData={10}
-                        tension={0.3}
-                      />
-                    </div>
+              <div className="hidden lg:flex lg:flex-col w-full lg:w-1/2">
+                {kitsHumedad.map((kit) => (
+                  <div key={kit.kitId} className="flex flex-col">
+                    <h3 className="text-[#033e42] roboto text-lg md:text-2xl font-semibold text-center lg:text-left">
+                      Kit {kit.kitId}
+                    </h3>
+                    <LineChart
+                      apiUrl={`/api/ambiental/${kit.kitId}`}
+                      campo="humedad"
+                      label="Tendencia de humedad (%)"
+                      width={800}
+                      height={110}
+                      cantidadData={15}
+                      tension={0.3}
+                    />
                   </div>
                 ))}
               </div>

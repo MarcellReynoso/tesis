@@ -13,15 +13,15 @@ import OptimizedImage from "./OptimizedImage";
 
 const navigation = [
   // { name: "Dashboard general", href: `/datos` },
+  { name: "Sensores", href: `/sensores` },
   { name: "Ambiental", href: `/ambiental` },
   { name: "Corporal", href: `/corporal`},
-  { name: "Sensores", href: `/sensores` },
 ];
 
 export default function BarraNavegacion() {
   return (
     <Disclosure as="nav" className="tarjeta text-white">
-      <div className="mx-auto px-45">
+      <div className="lg:mx-auto lg:px-45 px-1">
         <div className="relative flex h-16 items-center justify-between w-full">
           {/* Botón menú mobile */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
